@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือออนไลน์ฟรี - ตรวจสอบ Generation, คำนวณอายุ, ปีนักษัตร</title>
+    <meta name="description"
+        content="เครื่องมือออนไลน์ฟรี ตรวจสอบ Generation ของคุณ คำนวณอายุแบบละเอียด และดูปีนักษัตรไทย รองรับทั้งปี ค.ศ. และ พ.ศ.">
+    <meta name="keywords" content="ตรวจสอบ generation, คำนวณอายุ, ปีนักษัตร, เครื่องมือออนไลน์, ฟรี">
+    <meta property="og:title" content="เครื่องมือออนไลน์ฟรี - ตรวจสอบ Generation, คำนวณอายุ, ปีนักษัตร">
+    <meta property="og:description"
+        content="เครื่องมือออนไลน์ฟรี ตรวจสอบ Generation ของคุณ คำนวณอายุแบบละเอียด และดูปีนักษัตรไทย">
+    <meta property="og:type" content="website">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tools-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tools-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        input[type="number"],
+        input[type="date"] {
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            width: calc(100% - 30px);
+            font-size: 1em;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #28a745;
+        }
+
+        .ad-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .ad-banner {
+            margin: 20px 0;
+            min-height: 90px;
+            background-color: #f8f9fa;
+            border: 1px dashed #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+
+        .header-ad {
+            margin-bottom: 30px;
+        }
+
+        .footer-ad {
+            margin-top: 30px;
+        }
+
+        .sidebar-ad {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 1400px) {
+            .sidebar-ad {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Header Ad -->
+        <div class="ad-container header-ad">
+            <script async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx"
+                crossorigin="anonymous"></script>
+            <!-- Header Banner Ad -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Main Tools Container -->
+        <div class="tools-container">
+            <div class="container">
+                <h1>ตรวจสอบ Generation ของคุณ</h1>
+                <input type="number" id="birthYear" placeholder="กรอกปีเกิดของคุณ (ค.ศ. หรือ พ.ศ.)">
+                <button onclick="checkGeneration()">ตรวจสอบ</button>
+                <div class="result" id="result"></div>
+            </div>
+
+            <div class="container">
+                <h1>คำนวณอายุ</h1>
+                <input type="date" id="birthDate" placeholder="เลือกวันเกิดของคุณ">
+                <button onclick="calculateAge()">คำนวณอายุ</button>
+                <div class="result" id="ageResult"></div>
+            </div>
+
+            <div class="container">
+                <h1>ตรวจสอบปีนักษัตร</h1>
+                <input type="number" id="zodiacYear" placeholder="กรอกปีเกิดของคุณ (ค.ศ. หรือ พ.ศ.)">
+                <button onclick="checkZodiac()">ตรวจสอบนักษัตร</button>
+                <div class="result" id="zodiacResult"></div>
+            </div>
+        </div>
+
+        <!-- Middle Ad -->
+        <div class="ad-container">
+            <!-- Square Ad -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                data-ad-slot="xxxxxxxxxx" data-ad-format="rectangle"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Footer Ad -->
+        <div class="ad-container footer-ad">
+            <!-- Footer Banner Ad -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- Sidebar Ad (Desktop only) -->
+    <div class="sidebar-ad">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+            data-ad-slot="xxxxxxxxxx" data-ad-format="vertical"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <script>
+        function checkGeneration() {
+            let birthYear = document.getElementById('birthYear').value;
+            let generation = '';
+
+            // ตรวจสอบว่าปีเกิดเป็น พ.ศ. หรือไม่ ถ้าใช่ ให้แปลงเป็น ค.ศ.
+            if (birthYear >= 2400) {
+                birthYear -= 543;
+            }
+
+            if (birthYear >= 1946 && birthYear <= 1964) {
+                generation = 'Baby Boomer';
+            } else if (birthYear >= 1965 && birthYear <= 1980) {
+                generation = 'Gen X';
+            } else if (birthYear >= 1981 && birthYear <= 1996) {
+                generation = 'Gen Y';
+            } else if (birthYear >= 1997 && birthYear <= 2012) {
+                generation = 'Gen Z';
+            } else if (birthYear > 2012) {
+                generation = 'Gen Alpha';
+            } else {
+                generation = 'ไม่ทราบ Generation';
+            }
+
+            document.getElementById('result').innerText = `คุณอยู่ใน ${generation}`;
+        }
+
+        function calculateAge() {
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            const today = new Date();
+
+            if (!document.getElementById('birthDate').value) {
+                document.getElementById('ageResult').innerText = 'กรุณาเลือกวันเกิดของคุณ';
+                return;
+            }
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // คำนวณวัน เดือน ปี ที่แน่นอน
+            let years = age;
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById('ageResult').innerHTML =
+                `อายุของคุณ: <strong>${years} ปี ${months} เดือน ${days} วัน</strong>`;
+        }
+
+        function checkZodiac() {
+            let year = document.getElementById('zodiacYear').value;
+
+            if (!year) {
+                document.getElementById('zodiacResult').innerText = 'กรุณากรอกปีเกิดของคุณ';
+                return;
+            }
+
+            // ตรวจสอบว่าปีเกิดเป็น พ.ศ. หรือไม่ ถ้าใช่ ให้แปลงเป็น ค.ศ.
+            if (year >= 2400) {
+                year -= 543;
+            }
+
+            const zodiacAnimals = [
+                'ชวด (หนู)', 'ฉลู (วัว)', 'ขาล (เสือ)', 'เถาะ (กระต่าย)',
+                'มะโรง (มังกร)', 'มะเส็ง (งู)', 'มะเมีย (ม้า)', 'มะแม (แพะ)',
+                'วอก (ลิง)', 'ระกา (ไก่)', 'จอ (หมา)', 'กุน (หมู)'
+            ];
+
+            // ปีนักษัตรเริ่มต้นจากปี 1900 = ชวด (หนู)
+            const zodiacIndex = (year - 1900) % 12;
+            const zodiac = zodiacAnimals[zodiacIndex];
+
+            document.getElementById('zodiacResult').innerHTML =
+                `ปีนักษัตรของคุณ: <strong>${zodiac}</strong>`;
+        }
+    </script>
+</body>
+
+</html>
